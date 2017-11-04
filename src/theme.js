@@ -4,6 +4,12 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 
 const theme = {
   muiTheme: getMuiTheme({
+    card: {
+      titleColor: "#FFFFFF"
+    },
+    textField: {
+      textColor: "#606A77"
+    },
     palette: {
       primary1Color: "#004975",
       primary2Color: "#D52833",
@@ -13,7 +19,7 @@ const theme = {
       accent3Color: "#0775AB",
       alternateTextColor: "#0775AB",
       disabledColor: "#E4E4E3",
-      canvasColor: "#E4E4E3",
+      canvasColor: "#004975",
       pickerHeaderColor: "#004975",
       textColor: "#FFFFFF",
       borderColor: "#004975"

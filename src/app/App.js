@@ -6,6 +6,12 @@ import Grid from "material-ui/Grid";
 import AuthorizedUser from "./components/AuthorizedUser";
 import PrimaryUser from "./components/PrimaryUser";
 
+import Button from "./elements/Button";
+import FullPane from "./elements/FullPane";
+import HalfPane from "./elements/HalfPane";
+import SettingCard from "./elements/SettingCard";
+import TextField from "material-ui/TextField";
+
 class App extends Component {
   render() {
     return (
