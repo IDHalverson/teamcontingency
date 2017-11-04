@@ -12,18 +12,10 @@ class App extends Component {
       <MuiThemeProvider>
         <Router>
           <Switch>
-            <Route
-              exact
-              path="/:id"
-              component={() => <AuthorizedUser userIsPrimaryUser={false} />}
-            />
-            <Route
-              exact
-              path="/:id/:id"
-              component={() => <AuthorizedUser userIsPrimaryUser={true} />}
-            />
             <Route exact path="/:id" component={PrimaryUser} />
-            <Route exact path="/settings" component={Settings} />
+            <Route exact path="/:id/settings" component={Settings} />
+            <Route exact path="/:primaryId/:id" component={AuthorizedUser} />
+            <Route exact path="/authorized/:id" component={AuthorizedUser} />
           </Switch>
         </Router>
       </MuiThemeProvider>
