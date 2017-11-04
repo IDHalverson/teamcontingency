@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import request from "superagent";
 
 import AuthorizedUser from "./AuthorizedUser";
-
-const URL =
-  "https://3hkaob4gkc.execute-api.us-east-1.amazonaws.com/prod/au-hackathon/customers";
+import { fetchUser } from "../../utils/apiWrapper";
 
 class AuthorizedUserContainer extends Component {
   constructor(props) {
@@ -13,9 +10,6 @@ class AuthorizedUserContainer extends Component {
       // some user
     };
   }
-  fetchUser = id => {
-    return request.post(URL).send({ customer_id: id });
-  };
 
   async componentDidMount() {
     try {
@@ -39,13 +33,13 @@ class AuthorizedUserContainer extends Component {
       console.log(error);
     }
   }
+
   render() {
     if (!this.state.customer_id) {
       // loader?
       return <h1> No User</h1>;
     } else {
       const isPrimary = !!this.props.match.params.primaryId;
-      console.log(this.props.match);
       return <AuthorizedUser isPrimary={isPrimary} user={this.state} />;
     }
   }
