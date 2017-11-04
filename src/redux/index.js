@@ -1,3 +1,4 @@
-import { combineReducers } from "react-redux";
+import reducer from "./reducers";
+import actions from "./actions";
 
-export default combineReducers({});
+export { reducer, actions };
