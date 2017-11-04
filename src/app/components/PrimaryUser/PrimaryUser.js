@@ -1,7 +1,8 @@
 import React from "react";
+import FullPaneLeftHeader from "../../elements/FullPaneLeftHeader";
 
 const PrimaryUser = () => {
-  return <h6>PrimaryUser</h6>;
+  return <FullPaneLeftHeader />;
 };
 
 export default PrimaryUser;

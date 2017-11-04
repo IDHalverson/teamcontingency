@@ -1,7 +1,10 @@
 import React from "react";
-import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
 
-const theme = createMuiTheme({
+console.log(getMuiTheme());
+
+const muiTheme = getMuiTheme({
   card: {
     titleColor: "#FFFFFF"
   },
@@ -25,5 +28,5 @@ const theme = createMuiTheme({
 });
 
 export default ({ children }) => (
-  <MuiThemeProvider theme={theme} children={children} />
+  <MuiThemeProvider muiTheme={muiTheme} children={children} />
 );
