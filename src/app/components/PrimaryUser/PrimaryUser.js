@@ -1,12 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import sizeMe from "react-sizeme";
+
+import RefreshIndicator from "material-ui/RefreshIndicator";
+
+import { CapOneBlue } from "../../../colors";
 import FullPane from "../../elements/FullPane";
 import HalfPane from "../../elements/HalfPane";
-import Chart from "../Chart";
-import sizeMe from "react-sizeme";
-import RefreshIndicator from "material-ui/RefreshIndicator";
-import { CapOneBlue } from "../../../colors";
 import InfoCard from "../../elements/InfoCard";
-import { Link } from "react-router-dom";
+import Chart from "../Chart";
 
 const loaderDivStyle = {
   display: "flex",

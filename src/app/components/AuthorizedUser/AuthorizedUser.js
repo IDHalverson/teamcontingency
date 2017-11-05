@@ -1,12 +1,14 @@
 import React from "react";
-import FullPane from "../../elements/FullPane";
-import Chart from "../Chart";
 import sizeMe from "react-sizeme";
+import { Link, withRouter } from "react-router-dom";
 import RefreshIndicator from "material-ui/RefreshIndicator";
+
 import { CapOneBlue } from "../../../colors";
+import Chart from "../Chart";
+import Transactions from "../Transactions";
+import FullPane from "../../elements/FullPane";
 import InfoCard from "../../elements/InfoCard";
 import Button from "../../elements/Button";
-import { Link, withRouter } from "react-router-dom";
 
 const loaderDivStyle = {
   display: "flex",
@@ -55,6 +57,16 @@ const AuthorizedUser = ({ month, match, user, isPrimary, size: { width } }) => {
           text={<InfoCard user={user} />}
           media={
             <Chart user={user} month={month} height={300} width={width * 0.9} />
+          }
+        />
+        <FullPane
+          title="Transactions"
+          media={
+            <Transactions
+              transactions={user.transactions}
+              month={month}
+              primary={user.is_primary}
+            />
           }
         />
       </div>
