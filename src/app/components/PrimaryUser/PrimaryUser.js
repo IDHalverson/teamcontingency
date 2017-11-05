@@ -4,11 +4,12 @@ import sizeMe from "react-sizeme";
 
 import RefreshIndicator from "material-ui/RefreshIndicator";
 
-import { CapOneBlue } from "../../../colors";
+import { CapOneBlue, CapOneBlue2, CapOneRed } from "../../../colors";
 import FullPane from "../../elements/FullPane";
 import HalfPane from "../../elements/HalfPane";
 import InfoCard from "../../elements/InfoCard";
 import Chart from "../Chart";
+import Button from "../../elements/Button";
 
 const loaderDivStyle = {
   display: "flex",
@@ -40,7 +41,10 @@ const PrimaryUser = ({ month, user, isPrimary, size: { width } }) => {
     const halfPaneWidth = width < 800 ? width * 0.9 : width * 0.4;
     return (
       <div>
-        <Link to={`/authorized/${user.customer_id}`}>
+        <Link
+          style={{ textDecoration: "none" }}
+          to={`/authorized/${user.customer_id}`}
+        >
           <FullPane
             title={`${user.first_name} ${user.last_name}`}
             text={<InfoCard user={user} />}
@@ -63,6 +67,7 @@ const PrimaryUser = ({ month, user, isPrimary, size: { width } }) => {
         >
           {user.account.authorized_users.map(authUser => (
             <Link
+              style={{ textDecoration: "none" }}
               key={authUser.credit_card_number}
               to={`/${user.customer_id}/${authUser.customer_id}`}
             >
@@ -70,12 +75,33 @@ const PrimaryUser = ({ month, user, isPrimary, size: { width } }) => {
                 title={`${authUser.first_name} ${authUser.last_name}`}
                 text={<InfoCard user={authUser} />}
                 media={
-                  <Chart
-                    user={authUser}
-                    month={month}
-                    height={300}
-                    width={halfPaneWidth}
-                  />
+                  <div style={{ margin: "50px 0" }}>
+                    <Chart
+                      user={authUser}
+                      month={month}
+                      height={300}
+                      width={halfPaneWidth}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexFlow: "row nowrap",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <h3>This data is based on your personal</h3>
+                      <Link
+                        to={`/${user.customer_id}/${authUser.customer_id}/settings`}
+                      >
+                        <Button
+                          style={{ margin: "10px" }}
+                          backgroundColor={CapOneBlue2}
+                          label={"Settings"}
+                        />
+                      </Link>
+                    </div>
+                  </div>
                 }
               />
             </Link>

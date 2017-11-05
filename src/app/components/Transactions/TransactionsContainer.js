@@ -7,17 +7,18 @@ class TransactionsContainer extends Component {
     super(props);
   }
 
-  updatePrudency = (id, rating) => () => {
-    updatePrudency(id, rating);
+  updatePrudency = (id, rating, userId) => () => {
+    updatePrudency(id, rating, userId);
   };
 
   render() {
-    const { transactions, month, primary, count = 30 } = this.props;
+    const { user, transactions, month, primary, count = 30 } = this.props;
     const TransactionsProps = {
       transactions,
       month,
       primary,
       count,
+      user,
       updatePrudency: this.updatePrudency
     };
 

@@ -131,3 +131,7 @@ table {
   fill: #e4e4e3;
   font-size: 14px;
 }
+
+.negateLink {
+  text-decoration: none !important;
+}

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import CapOneLogo from "./elements/CapOneLogo";
 import AuthorizedUser from "./components/AuthorizedUser";
 import PrimaryUser from "./components/PrimaryUser";
+import Settings from "./components/PrimaryUser/Settings";
 
 import "./App.css";
 
@@ -40,6 +41,9 @@ class App extends Component {
             </Route>
             <Route exact path="/authorized/:id">
               <AuthorizedUser month={this.state.month} />
+            </Route>
+            <Route exact path="/:primaryId/:authorizedId/settings">
+              <Settings />
             </Route>
             <Route exact path="/:primaryId/:id">
               <AuthorizedUser month={this.state.month} />

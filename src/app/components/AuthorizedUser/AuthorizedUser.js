@@ -63,6 +63,7 @@ const AuthorizedUser = ({ month, match, user, isPrimary, size: { width } }) => {
           title="Transactions"
           media={
             <Transactions
+              user={user}
               transactions={user.transactions}
               month={month}
               primary={user.is_primary}

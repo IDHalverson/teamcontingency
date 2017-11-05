@@ -15,6 +15,7 @@ import { getTransactions, prettyDate, prettyName, price } from "./util";
 const headerStyle = { color: CapOneGray, fontSize: "1.25em" };
 
 const Transactions = ({
+  user,
   updatePrudency,
   transactions,
   month,
@@ -28,7 +29,9 @@ const Transactions = ({
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
         <TableRow style={{ verticalAlign: "center" }}>
           {["Date", "Merchant", "Amount"].map(label => (
-            <TableHeaderColumn style={headerStyle}>{label}</TableHeaderColumn>
+            <TableHeaderColumn key={label} style={headerStyle}>
+              {label}
+            </TableHeaderColumn>
           ))}
           {!primary && (
             <TableHeaderColumn style={headerStyle}>Prudent?</TableHeaderColumn>
@@ -49,7 +52,11 @@ const Transactions = ({
                   thumbStyle={{ backgroundColor: CapOneRed }}
                   thumbSwitchedStyle={{ backgroundColor: CapOneBlue2 }}
                   defaultToggled={true}
-                  onToggle={updatePrudency(t.transaction_id, t.rating)}
+                  onToggle={updatePrudency(
+                    t.transaction_id,
+                    !t.rating,
+                    user.customer_id
+                  )}
                 />
               </TableRowColumn>
             )}

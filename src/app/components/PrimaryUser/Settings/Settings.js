@@ -1,7 +1,24 @@
 import React from "react";
+import FullPane from "../../../elements/FullPane";
+import SettingCard from "../../../elements/SettingCard";
+import Button from "../../../elements/Button";
+import { withRouter, Link } from "react-router-dom";
 
-const Settings = ({ user, actions }) => {
-  return <h6>Settings</h6>;
+const Settings = ({ match, user, actions }) => {
+  return (
+    <div>
+      <Link to={`/${match.params.primaryId}`}>
+        <Button label={"Back"} />
+      </Link>
+      <FullPane
+        media={
+          <div>
+            <SettingCard />
+          </div>
+        }
+      />
+    </div>
+  );
 };
 
-export default Settings;
+export default withRouter(Settings);
