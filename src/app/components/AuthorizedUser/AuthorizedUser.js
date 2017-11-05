@@ -4,7 +4,7 @@ import HalfPane from "../../elements/HalfPane";
 import AUChart from "./AUChart";
 import sizeMe from "react-sizeme";
 import RefreshIndicator from "material-ui/RefreshIndicator";
-import { CapOneRed } from "../../../colors";
+import { CapOneBlue } from "../../../colors";
 
 const data = [
   { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
@@ -16,28 +16,37 @@ const data = [
   { name: "Page G", uv: 3490, pv: 4300, amt: 2100 }
 ];
 
-const loaderStyle = {
-  width: "100%",
+const loaderDivStyle = {
   display: "flex",
   flexFlow: "row nowrap",
-  justifyContent: "center",
-  alignItems: "center"
+  justifyContent: "center"
+};
+
+const loaderStyle = {
+  position: "relative",
+  marginTop: "100px",
+  backgroundColor: "rgba(255,255,255,0)"
 };
 
 const AuthorizedUser = ({ user, isPrimary, size: { width } }) => {
+  console.log(user);
+
+  const primaryData = [{}];
+
   return (
     <div>
-      <div style={loaderStyle}>
-        <div>
+      {!user && (
+        <div style={loaderDivStyle}>
           <RefreshIndicator
+            style={loaderStyle}
             size={40}
             left={10}
             top={0}
-            loadingColor={CapOneRed}
-            status={!user ? "loading" : "hide"}
+            loadingColor={CapOneBlue}
+            status={"loading"}
           />
         </div>
-      </div>
+      )}
       {!!user && (
         <div>
           <FullPane
