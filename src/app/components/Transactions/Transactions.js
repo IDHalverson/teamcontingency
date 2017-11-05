@@ -47,6 +47,7 @@ const Transactions = ({
             {!primary && (
               <TableRowColumn>
                 <Toggle
+                  toggled={t.rating}
                   trackStyle={{ backgroundColor: "#FFFFFF" }}
                   trackSwitchedStyle={{ backgroundColor: "#FFFFFF" }}
                   thumbStyle={{ backgroundColor: CapOneRed }}

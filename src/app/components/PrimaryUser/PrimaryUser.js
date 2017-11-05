@@ -90,7 +90,7 @@ const PrimaryUser = ({ month, user, isPrimary, size: { width } }) => {
                         alignItems: "center"
                       }}
                     >
-                      <h3>This data is based on your personal</h3>
+                      <h3>Data is based on your</h3>
                       <Link
                         to={`/${user.customer_id}/${authUser.customer_id}/settings`}
                       >
@@ -100,6 +100,7 @@ const PrimaryUser = ({ month, user, isPrimary, size: { width } }) => {
                           label={"Settings"}
                         />
                       </Link>
+                      <h3>for this user.</h3>
                     </div>
                   </div>
                 }

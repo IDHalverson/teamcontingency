@@ -11,6 +11,7 @@ const Settings = ({ match, user, actions }) => {
         <Button label={"Back"} />
       </Link>
       <FullPane
+        title={"Settings"}
         media={
           <div>
             <SettingCard />
