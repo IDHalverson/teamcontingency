@@ -4,14 +4,13 @@ const style = {
   width: "100%",
   display: "flex",
   flexFlow: "row nowrap",
+  alignItems: "center",
   justifyContent: "center"
 };
 
 const imgStyle = {
   display: "block",
-  maxWidth: "50%",
-  objectFit: "contain",
-  margin: "-14% 0"
+  maxWidth: "50%"
 };
 
 const CapOneLogo = () => {

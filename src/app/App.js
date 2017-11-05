@@ -8,13 +8,6 @@ import PrimaryUser from "./components/PrimaryUser";
 
 import "./App.css";
 
-// const thing = async () => {
-//   let res = await fetchUser(100710000);
-//   console.log(res);
-// };
-//
-// thing();
-
 class App extends Component {
   render() {
     return (
