@@ -29,98 +29,81 @@ const loaderStyle = {
 };
 
 const AuthorizedUser = ({ user, isPrimary, size: { width } }) => {
-  let primaryData = [];
-  let transactionsByMonth = {};
-
-  if (user) {
-    user.transactions.forEach(
-      transaction =>
-        transactionsByMonth[transaction.month]
-          ? transactionsByMonth[transaction.month]++
-          : (transactionsByMonth[transaction.month] = 1)
+  if (!user) {
+    return (
+      <div style={loaderDivStyle}>
+        <RefreshIndicator
+          style={loaderStyle}
+          size={40}
+          left={10}
+          top={0}
+          loadingColor={CapOneBlue}
+          status={"loading"}
+        />
+      </div>
+    );
+  } else {
+    const transactionsByMonth = user.transactions.reduce(
+      (acc, transaction) =>
+        acc[transaction.month]
+          ? acc[transaction.month]++
+          : (acc[transaction.month] = 1),
+      {}
     );
 
-    primaryData = Object.keys(transactionsByMonth).map(month => ({
+    const primaryData = Object.keys(transactionsByMonth).map(month => ({
       name: month,
       Transactions: transactionsByMonth[month],
       Progress: 10,
       amt: 400
     }));
+    return (
+      <div>
+        <FullPane
+          title={"User 1"}
+          text={Object.entries(user).map(
+            ([prop, val]) =>
+              prop === "transactions" ? null : (
+                <h3 key={prop}>{`${prop}: ${val}`}</h3>
+              )
+          )}
+          media={
+            <AUChart data={primaryData} height={300} width={width * 0.9} />
+          }
+        />
+        {user.account.authorized_users.map(user => {
+          const transactionsByMonth = user.transactions.reduce(
+            (acc, transaction) =>
+              acc[transaction.month]
+                ? acc[transaction.month]++
+                : (acc[transaction.month] = 1),
+            {}
+          );
+
+          const data = Object.keys(transactionsByMonth).map(month => ({
+            name: month,
+            Transactions: transactionsByMonth[month],
+            Progress: 10,
+            amt: 400
+          }));
+
+          return (
+            <HalfPane
+              key={user.credit_card_number}
+              title={"Dependent 1"}
+              text={Object.keys(user).map(
+                key =>
+                  key === "transactions" ? null : (
+                    <h3 key={key}>{`${key}: ${user[key]}`}</h3>
+                  )
+              )}
+              media={<AUChart data={data} height={300} width={width * 0.4} />}
+            />
+          );
+        })}
+      </div>
+    );
   }
-
-  return (
-    <div>
-      {!user && (
-        <div style={loaderDivStyle}>
-          <RefreshIndicator
-            style={loaderStyle}
-            size={40}
-            left={10}
-            top={0}
-            loadingColor={CapOneBlue}
-            status={"loading"}
-          />
-        </div>
-      )}
-      {!!user && (
-        <div>
-          <FullPane
-            title={"User 1"}
-            text={Object.keys(user).map(
-              key =>
-                key === "transactions" ? null : (
-                  <h3 key={key}>{`${key}: ${user[key]}`}</h3>
-                )
-            )}
-            media={
-              <AUChart data={primaryData} height={300} width={width * 0.9} />
-            }
-          />
-          {user.account.authorized_users.map(user => {
-            let data = [];
-
-            user.transactions.forEach(
-              transaction =>
-                transactionsByMonth[transaction.month]
-                  ? transactionsByMonth[transaction.month]++
-                  : (transactionsByMonth[transaction.month] = 1)
-            );
-
-            data = Object.keys(transactionsByMonth).map(month => ({
-              name: month,
-              Transactions: transactionsByMonth[month],
-              Progress: 10,
-              amt: 400
-            }));
-
-            return (
-              <HalfPane
-                key={user.credit_card_number}
-                title={"Dependent 1"}
-                text={Object.keys(user).map(
-                  key =>
-                    key === "transactions" ? null : (
-                      <h3 key={key}>{`${key}: ${user[key]}`}</h3>
-                    )
-                )}
-                media={<AUChart data={data} height={300} width={width * 0.4} />}
-              />
-            );
-          })}
-          {/* <HalfPane
-            title={"Dependent 1"}
-            text={"Thanks for choosing Capital One!"}
-            media={<AUChart data={data} height={300} width={width * 0.4} />}
-          />
-          <HalfPane
-            title={"Dependent 2"}
-            text={"Thanks for choosing Capital One!"}
-            media={<AUChart data={data} height={300} width={width * 0.4} />}
-          /> */}
-        </div>
-      )}
-    </div>
-  );
 };
 
 export default sizeMe()(AuthorizedUser);
