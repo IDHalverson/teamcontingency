@@ -1,13 +1,17 @@
 import React from "react";
-import Card, { CardHeader } from "material-ui/Card";
+import Card, { CardHeader, CardText, CardMedia } from "material-ui/Card";
 
 const style = {
-  margin: "5%"
+  margin: "2% 5%",
+  width: "40%",
+  float: "left"
 };
 
-const HalfPane = () => (
+const HalfPane = ({ media, text, title }) => (
   <Card style={style}>
-    <CardHeader title={"Half Pane"} />
+    <CardHeader title={title} />
+    <CardText>{text}</CardText>
+    <CardMedia>{media}</CardMedia>
   </Card>
 );
 
