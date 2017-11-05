@@ -9,15 +9,33 @@ import PrimaryUser from "./components/PrimaryUser";
 import "./App.css";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      month: 1
+    };
+  }
+
+  nextMonth = () =>
+    this.setState({ month: this.state.month == 12 ? 1 : this.state.month + 1 });
+
+  prevMonth = () => this.setState({ month: this.state.month - 1 || 12 });
+
   render() {
     return (
       <Router>
         <div>
-          <CapOneLogo />
+          <CapOneLogo next={this.nextMonth} prev={this.prevMonth} />
           <Switch>
-            <Route exact path="/:id" component={PrimaryUser} />
-            <Route exact path="/authorized/:id" component={AuthorizedUser} />
-            <Route exact path="/:primaryId/:id" component={AuthorizedUser} />
+            <Route exact path="/:id">
+              <PrimaryUser month={this.state.month} />
+            </Route>
+            <Route exact path="/authorized/:id">
+              <AuthorizedUser month={this.state.month} />
+            </Route>
+            <Route exact path="/:primaryId/:id">
+              <AuthorizedUser month={this.state.month} />
+            </Route>
           </Switch>
         </div>
       </Router>

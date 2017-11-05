@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 import PrimaryUser from "./PrimaryUser";
 import { fetchUser } from "../../utils/apiWrapper";
@@ -6,42 +7,23 @@ import { fetchUser } from "../../utils/apiWrapper";
 class PrimaryUserContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // some user
-    };
+    this.state = {};
   }
 
   async componentDidMount() {
     try {
-      // const user = await this.fetchUser(this.props.match.id);
-      const user = {
-        last_name: "Bramwich",
-        gender: "Female",
-        first_name: "Farah",
-        customer_id: 100720000,
-        dob: "3/7/1966",
-        is_primary: false,
-        zipcode: "40546",
-        credit_card_number: "374622755572913",
-        is_married: false,
-        country: "United States",
-        email: "fbramwich1@wikimedia.org"
-      };
-
-      this.setState(user);
+      const { props: { match: { params: { id } } } } = this;
+      const user = await fetchUser(id);
+      this.setState({ user });
     } catch (error) {
       console.log(error);
     }
   }
 
   render() {
-    if (!this.state.customer_id) {
-      // loader?
-      return <h1> No User</h1>;
-    } else {
-      return <PrimaryUser user={this.state} />;
-    }
+    const { props: { match: { params: { primaryId } } } } = this;
+    return <PrimaryUser isPrimary={!!primaryId} user={this.state.user} />;
   }
 }
 
-export default PrimaryUserContainer;
+export default withRouter(PrimaryUserContainer);

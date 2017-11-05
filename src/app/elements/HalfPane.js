@@ -7,9 +7,13 @@ const style = {
   float: "left"
 };
 
+const titleStyle = {
+  fontSize: "1.5em"
+};
+
 const HalfPane = ({ media, text, title }) => (
   <Card style={style}>
-    <CardHeader title={title} />
+    <CardHeader titleStyle={titleStyle} title={title} />
     <CardText>{text}</CardText>
     <CardMedia>{media}</CardMedia>
   </Card>

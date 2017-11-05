@@ -1,5 +1,5 @@
 import React from "react";
-import { CapOneBlue, CapOneBlue2, CapOneRed } from "../../../../colors";
+import { CapOneBlue, CapOneBlue2, CapOneRed } from "../../../colors";
 
 import {
   AreaChart,
@@ -11,7 +11,24 @@ import {
   XAxis
 } from "recharts";
 
-const AUChart = ({ width, height, data }) => {
+const aggregateData = user => {
+  const transactionsByMonth = user.transactions.reduce((acc, transaction) => {
+    acc[transaction.month]
+      ? acc[transaction.month]++
+      : (acc[transaction.month] = 1);
+    return acc;
+  }, {});
+  return Object.keys(transactionsByMonth).map(month => ({
+    name: month,
+    Transactions: transactionsByMonth[month],
+    Progress: 10,
+    amt: 400
+  }));
+};
+
+const Chart = ({ width, height, user }) => {
+  const data = aggregateData(user);
+
   return (
     <AreaChart
       width={width || 730}
@@ -33,13 +50,15 @@ const AUChart = ({ width, height, data }) => {
       <YAxis />
       <CartesianGrid strokeDasharray="3 3" />
       <Tooltip labelStyle={{ color: CapOneBlue }} />
-      <Area
-        type="monotone"
-        dataKey="Progress"
-        stroke={CapOneBlue2}
-        fillOpacity={1}
-        fill="url(#colorPv)"
-      />
+      {!user.is_primary && (
+        <Area
+          type="monotone"
+          dataKey="Progress"
+          stroke={CapOneBlue2}
+          fillOpacity={1}
+          fill="url(#colorPv)"
+        />
+      )}
       <Area
         type="monotone"
         dataKey="Transactions"
@@ -51,4 +70,4 @@ const AUChart = ({ width, height, data }) => {
   );
 };
 
-export default AUChart;
+export default Chart;

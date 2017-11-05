@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 import AuthorizedUser from "./AuthorizedUser";
 import { fetchUser } from "../../utils/apiWrapper";
@@ -25,4 +26,4 @@ class AuthorizedUserContainer extends Component {
   }
 }
 
-export default AuthorizedUserContainer;
+export default withRouter(AuthorizedUserContainer);
