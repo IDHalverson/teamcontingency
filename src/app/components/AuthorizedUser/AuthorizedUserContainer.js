@@ -11,19 +11,27 @@ class AuthorizedUserContainer extends Component {
   }
 
   async componentDidMount() {
+    const { props: { match: { params: { id } } } } = this;
+    await this.setState({
+      id
+    });
+    await this.fetchTheUser();
+  }
+
+  fetchTheUser = async () => {
     try {
-      const { props: { match: { params: { id } } } } = this;
-      const user = await fetchUser(id);
+      const user = await fetchUser(this.state.id);
       this.setState({ user });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   render() {
     const { props: { month, match: { params: { primaryId } } } } = this;
     return (
       <AuthorizedUser
+        fetchUser={this.fetchTheUser}
         month={month}
         isPrimary={!!primaryId}
         user={this.state.user}

@@ -16,7 +16,7 @@ export const fetchUser = async id => {
 export const updatePrudency = async (id, rating, userId) => {
   try {
     const res = await request
-      .patch(`${BASE_URL}/update-transaction`)
+      .patch(`${BASE_URL}/update-transaction/`)
       .send({ customer_id: userId, transaction_id: id, rating });
     console.log(res.body);
     return res.body;

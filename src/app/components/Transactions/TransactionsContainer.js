@@ -7,8 +7,9 @@ class TransactionsContainer extends Component {
     super(props);
   }
 
-  updatePrudency = (id, rating, userId) => () => {
-    updatePrudency(id, rating, userId);
+  updatePrudency = (id, rating, userId) => async () => {
+    await updatePrudency(id, rating, userId);
+    await this.props.fetchUser();
   };
 
   render() {

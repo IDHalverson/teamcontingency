@@ -13,6 +13,9 @@ import {
 
 import { monthMap } from "../../utils/months";
 
+const maxLimit = 5000;
+const limitStart = 300;
+
 const aggregateData = (user, month) => {
   const spendingByMonth = user.transactions.reduce((acc, transaction) => {
     if (monthMap[transaction.month] <= month) {
@@ -22,11 +25,31 @@ const aggregateData = (user, month) => {
     }
     return acc;
   }, {});
+
+  let goodDecisionIndex;
+
+  const prudenceHistory = user.transactions.reduce((acc, transaction) => {
+    if (monthMap[transaction.month] <= month) {
+      acc.push(transaction.rating);
+    }
+    return acc;
+  }, []);
+
+  let index = prudenceHistory.length - 1;
+  while (index) {
+    if (prudenceHistory[index]) {
+      goodDecisionIndex++;
+    } else {
+      goodDecisionIndex = 0;
+    }
+    index--;
+  }
+
   return Object.keys(spendingByMonth)
     .map(month => ({
       name: month,
       Spending: +spendingByMonth[month].toFixed(2),
-      Limit: 10,
+      Limit: limitStart + goodDecisionIndex * 0.2 * (maxLimit - limitStart),
       amt: 400
     }))
     .sort((a, b) => monthMap[a.name] - monthMap[b.name]);

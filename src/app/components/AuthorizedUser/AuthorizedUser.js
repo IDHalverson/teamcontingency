@@ -22,7 +22,14 @@ const loaderStyle = {
   backgroundColor: "rgba(255,255,255,0)"
 };
 
-const AuthorizedUser = ({ month, match, user, isPrimary, size: { width } }) => {
+const AuthorizedUser = ({
+  fetchUser,
+  month,
+  match,
+  user,
+  isPrimary,
+  size: { width }
+}) => {
   if (!user) {
     return (
       <div style={loaderDivStyle}>
@@ -63,6 +70,7 @@ const AuthorizedUser = ({ month, match, user, isPrimary, size: { width } }) => {
           title="Transactions"
           media={
             <Transactions
+              fetchUser={fetchUser}
               user={user}
               transactions={user.transactions}
               month={month}
