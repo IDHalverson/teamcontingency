@@ -1,6 +1,5 @@
 import React from "react";
 import FullPane from "../../elements/FullPane";
-import HalfPane from "../../elements/HalfPane";
 import Chart from "../Chart";
 import sizeMe from "react-sizeme";
 import RefreshIndicator from "material-ui/RefreshIndicator";
@@ -21,11 +20,12 @@ const loaderStyle = {
   backgroundColor: "rgba(255,255,255,0)"
 };
 
-const AuthorizedUser = ({ match, user, isPrimary, size: { width } }) => {
+const AuthorizedUser = ({ month, match, user, isPrimary, size: { width } }) => {
   if (!user) {
     return (
       <div style={loaderDivStyle}>
         <RefreshIndicator
+          month={month}
           style={loaderStyle}
           size={40}
           left={10}
@@ -36,17 +36,26 @@ const AuthorizedUser = ({ match, user, isPrimary, size: { width } }) => {
       </div>
     );
   } else {
+    let link = null;
+    if (isPrimary) {
+      link = `/${match.params.primaryId}`;
+    } else if (user.is_primary) {
+      link = `/${user.customer_id}`;
+    }
+
     return (
       <div>
-        {isPrimary && (
-          <Link to={`/${match.params.primaryId}`}>
+        {link && (
+          <Link to={link}>
             <Button label={"Back"} />
           </Link>
         )}
         <FullPane
           title={`${user.first_name} ${user.last_name}`}
           text={<InfoCard user={user} />}
-          media={<Chart user={user} height={300} width={width * 0.9} />}
+          media={
+            <Chart user={user} month={month} height={300} width={width * 0.9} />
+          }
         />
       </div>
     );

@@ -21,8 +21,14 @@ class AuthorizedUserContainer extends Component {
   }
 
   render() {
-    const { props: { match: { params: { primaryId } } } } = this;
-    return <AuthorizedUser isPrimary={!!primaryId} user={this.state.user} />;
+    const { props: { month, match: { params: { primaryId } } } } = this;
+    return (
+      <AuthorizedUser
+        month={month}
+        isPrimary={!!primaryId}
+        user={this.state.user}
+      />
+    );
   }
 }
 

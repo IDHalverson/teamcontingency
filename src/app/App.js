@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { fetchUser } from "./utils/apiWrapper";
 
 import CapOneLogo from "./elements/CapOneLogo";
 import AuthorizedUser from "./components/AuthorizedUser";
@@ -12,12 +11,14 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      month: 1
+      month: 2
     };
   }
 
   nextMonth = () =>
-    this.setState({ month: this.state.month == 12 ? 1 : this.state.month + 1 });
+    this.setState({
+      month: this.state.month === 12 ? 1 : this.state.month + 1
+    });
 
   prevMonth = () => this.setState({ month: this.state.month - 1 || 12 });
 

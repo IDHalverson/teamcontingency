@@ -14,11 +14,17 @@ const imgStyle = {
   maxWidth: "50%"
 };
 
+const buttonProps = {
+  backgroundColor: "#fff",
+  style: { margin: "5px", visible: "hidden" }
+};
+
 const CapOneLogo = ({ next, prev }) => {
   return (
     <div>
       <div style={style}>
         <img
+          alt=""
           style={imgStyle}
           src="https://d2e70e9yced57e.cloudfront.net/common/product/images/banking/capital-one-360-checking-account_11331000348b.png"
         />
@@ -30,8 +36,8 @@ const CapOneLogo = ({ next, prev }) => {
           right: "50px"
         }}
       >
-        <Button label={"<<<"} onClick={prev} style={{ margin: "5px" }} />
-        <Button label={">>>"} onClick={next} style={{ margin: "5px" }} />
+        <Button label={"<"} onClick={prev} props={buttonProps} />
+        <Button label={">"} onClick={next} props={buttonProps} />
       </div>
     </div>
   );

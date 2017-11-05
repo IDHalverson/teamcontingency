@@ -11,23 +11,42 @@ import {
   XAxis
 } from "recharts";
 
-const aggregateData = user => {
-  const transactionsByMonth = user.transactions.reduce((acc, transaction) => {
-    acc[transaction.month]
-      ? acc[transaction.month]++
-      : (acc[transaction.month] = 1);
-    return acc;
-  }, {});
-  return Object.keys(transactionsByMonth).map(month => ({
-    name: month,
-    Transactions: transactionsByMonth[month],
-    Progress: 10,
-    amt: 400
-  }));
+const monthMap = {
+  January: 1,
+  February: 2,
+  March: 3,
+  April: 4,
+  May: 5,
+  June: 6,
+  July: 7,
+  August: 8,
+  September: 9,
+  October: 10,
+  November: 11,
+  December: 12
 };
 
-const Chart = ({ width, height, user }) => {
-  const data = aggregateData(user);
+const aggregateData = (user, month) => {
+  const transactionsByMonth = user.transactions.reduce((acc, transaction) => {
+    if (monthMap[transaction.month] <= month) {
+      acc[transaction.month]
+        ? acc[transaction.month]++
+        : (acc[transaction.month] = 1);
+    }
+    return acc;
+  }, {});
+  return Object.keys(transactionsByMonth)
+    .map(month => ({
+      name: month,
+      Transactions: transactionsByMonth[month],
+      Progress: 10,
+      amt: 400
+    }))
+    .sort((a, b) => monthMap[a.name] - monthMap[b.name]);
+};
+
+const Chart = ({ width, height, user, month }) => {
+  const data = aggregateData(user, month);
 
   return (
     <AreaChart

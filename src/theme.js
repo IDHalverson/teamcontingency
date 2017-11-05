@@ -3,8 +3,6 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import { CapOneRed, CapOneBlue, CapOneBlue2, CapOneGray } from "./colors";
 
-console.log(getMuiTheme());
-
 const muiTheme = getMuiTheme({
   card: {
     titleColor: "#FFFFFF"

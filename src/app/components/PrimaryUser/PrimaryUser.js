@@ -20,7 +20,7 @@ const loaderStyle = {
   backgroundColor: "rgba(255,255,255,0)"
 };
 
-const PrimaryUser = ({ user, isPrimary, size: { width } }) => {
+const PrimaryUser = ({ month, user, isPrimary, size: { width } }) => {
   if (!user) {
     return (
       <div style={loaderDivStyle}>
@@ -37,18 +37,36 @@ const PrimaryUser = ({ user, isPrimary, size: { width } }) => {
   } else {
     return (
       <div>
-        <FullPane
-          title={`${user.first_name} ${user.last_name}`}
-          text={<InfoCard user={user} />}
-          media={<Chart user={user} height={300} width={width * 0.9} />}
-        />
+        <Link to={`/authorized/${user.customer_id}`}>
+          <FullPane
+            title={`${user.first_name} ${user.last_name}`}
+            text={<InfoCard user={user} />}
+            media={
+              <Chart
+                user={user}
+                month={month}
+                height={300}
+                width={width * 0.9}
+              />
+            }
+          />
+        </Link>
         {user.account.authorized_users.map(authUser => (
-          <Link to={`/${user.customer_id}/${authUser.customer_id}`}>
+          <Link
+            key={authUser.credit_card_number}
+            to={`/${user.customer_id}/${authUser.customer_id}`}
+          >
             <HalfPane
-              key={authUser.credit_card_number}
               title={`${authUser.first_name} ${authUser.last_name}`}
               text={<InfoCard user={authUser} />}
-              media={<Chart user={authUser} height={300} width={width * 0.4} />}
+              media={
+                <Chart
+                  user={authUser}
+                  month={month}
+                  height={300}
+                  width={width * 0.4}
+                />
+              }
             />
           </Link>
         ))}

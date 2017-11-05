@@ -21,8 +21,14 @@ class PrimaryUserContainer extends Component {
   }
 
   render() {
-    const { props: { match: { params: { primaryId } } } } = this;
-    return <PrimaryUser isPrimary={!!primaryId} user={this.state.user} />;
+    const { props: { month, match: { params: { primaryId } } } } = this;
+    return (
+      <PrimaryUser
+        month={month}
+        isPrimary={!!primaryId}
+        user={this.state.user}
+      />
+    );
   }
 }
 
