@@ -21,24 +21,12 @@ const buttonProps = {
 
 const CapOneLogo = ({ next, prev }) => {
   return (
-    <div>
-      <div style={style}>
-        <img
-          alt=""
-          style={imgStyle}
-          src="https://d2e70e9yced57e.cloudfront.net/common/product/images/banking/capital-one-360-checking-account_11331000348b.png"
-        />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "50px",
-          right: "50px"
-        }}
-      >
-        <Button label={"<"} onClick={prev} props={buttonProps} />
-        <Button label={">"} onClick={next} props={buttonProps} />
-      </div>
+    <div style={style}>
+      <img
+        alt=""
+        style={imgStyle}
+        src="https://d2e70e9yced57e.cloudfront.net/common/product/images/banking/capital-one-360-checking-account_11331000348b.png"
+      />
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Table,
   TableBody,
@@ -10,53 +9,47 @@ import {
 } from "material-ui/Table";
 import Toggle from "material-ui/Toggle";
 
-import { CapOneRed, CapOneBlue2 } from "../../../colors";
-import { monthMap } from "../../utils/months";
+import { CapOneRed, CapOneBlue2, CapOneGray } from "../../../colors";
+import { getTransactions, prettyDate, prettyName, price } from "./util";
 
-const monthNum = transaction => monthMap[transaction.month];
-const transactionDate = t => new Date(t.year, monthNum(t) - 1, t.day).getTime();
-const price = p => `$${p.toFixed(2)}`;
-const prettyDate = d => new Date(d).toLocaleDateString();
-const prettyName = name =>
-  name
-    .split(" ")
-    .map(w => (w[0] || "").toUpperCase() + w.slice(1))
-    .join(" ");
+const headerStyle = { color: CapOneGray, fontSize: "1.25em" };
 
-const Transactions = ({ transactions, month, primary, count = 30 }) => {
-  transactions = transactions
-    .filter(transaction => monthNum(transaction) <= month)
-    .map(t => ({ ...t, date: transactionDate(t) }))
-    .sort((a, b) => b.date - a.date)
-    .filter((transaction, index) => index < count);
-
-  const hStyle = { color: CapOneRed, fontSize: "1.25em" };
+const Transactions = ({
+  updatePrudency,
+  transactions,
+  month,
+  primary,
+  count
+}) => {
+  transactions = getTransactions({ transactions, month, primary, count });
 
   return (
     <Table>
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
         <TableRow style={{ verticalAlign: "center" }}>
-          <TableHeaderColumn style={hStyle}>Date</TableHeaderColumn>
-          <TableHeaderColumn style={hStyle}>Merchant</TableHeaderColumn>
-          <TableHeaderColumn style={hStyle}>Amount</TableHeaderColumn>
+          {["Date", "Merchant", "Amount"].map(label => (
+            <TableHeaderColumn style={headerStyle}>{label}</TableHeaderColumn>
+          ))}
           {!primary && (
-            <TableHeaderColumn style={hStyle}>Acceptable?</TableHeaderColumn>
+            <TableHeaderColumn style={headerStyle}>Prudent?</TableHeaderColumn>
           )}
         </TableRow>
       </TableHeader>
       <TableBody displayRowCheckbox={false}>
         {transactions.map(t => (
-          <TableRow key={t.transaction_id}>
+          <TableRow key={t.transaction_id} hoverable={true}>
             <TableRowColumn>{prettyDate(t.date)}</TableRowColumn>
             <TableRowColumn>{prettyName(t.merchant_name)}</TableRowColumn>
             <TableRowColumn>{price(t.amount)}</TableRowColumn>
             {!primary && (
               <TableRowColumn>
                 <Toggle
-                  trackSwitchedStyle={{ backgroundColor: CapOneRed }}
+                  trackStyle={{ backgroundColor: "#FFFFFF" }}
+                  trackSwitchedStyle={{ backgroundColor: "#FFFFFF" }}
+                  thumbStyle={{ backgroundColor: CapOneRed }}
                   thumbSwitchedStyle={{ backgroundColor: CapOneBlue2 }}
-                  thumbStyle={{ backgroundColor: CapOneBlue2 }}
                   defaultToggled={true}
+                  onToggle={updatePrudency(t.transaction_id, t.rating)}
                 />
               </TableRowColumn>
             )}

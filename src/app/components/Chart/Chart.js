@@ -14,19 +14,19 @@ import {
 import { monthMap } from "../../utils/months";
 
 const aggregateData = (user, month) => {
-  const transactionsByMonth = user.transactions.reduce((acc, transaction) => {
+  const spendingByMonth = user.transactions.reduce((acc, transaction) => {
     if (monthMap[transaction.month] <= month) {
-      acc[transaction.month]
-        ? acc[transaction.month]++
-        : (acc[transaction.month] = 1);
+      acc[transaction.month] !== undefined
+        ? (acc[transaction.month] += transaction.amount)
+        : (acc[transaction.month] = 0);
     }
     return acc;
   }, {});
-  return Object.keys(transactionsByMonth)
+  return Object.keys(spendingByMonth)
     .map(month => ({
       name: month,
-      Transactions: transactionsByMonth[month],
-      Progress: 10,
+      Spending: +spendingByMonth[month].toFixed(2),
+      Limit: 10,
       amt: 400
     }))
     .sort((a, b) => monthMap[a.name] - monthMap[b.name]);
@@ -59,7 +59,7 @@ const Chart = ({ width, height, user, month }) => {
       {!user.is_primary && (
         <Area
           type="monotone"
-          dataKey="Progress"
+          dataKey="Limit"
           stroke={CapOneBlue2}
           fillOpacity={1}
           fill="url(#colorPv)"
@@ -67,7 +67,7 @@ const Chart = ({ width, height, user, month }) => {
       )}
       <Area
         type="monotone"
-        dataKey="Transactions"
+        dataKey="Spending"
         stroke={CapOneRed}
         fillOpacity={1}
         fill="url(#colorUv)"

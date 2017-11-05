@@ -22,6 +22,13 @@ class App extends Component {
 
   prevMonth = () => this.setState({ month: this.state.month - 1 || 12 });
 
+  componentDidMount() {
+    window.addEventListener("keypress", event => {
+      if (event.keyCode === 44) this.prevMonth();
+      if (event.keyCode === 46) this.nextMonth();
+    });
+  }
+
   render() {
     return (
       <Router>

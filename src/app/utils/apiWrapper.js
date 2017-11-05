@@ -6,3 +6,8 @@ export const fetchUser = async id => {
   const res = await request.get(`${BASE_URL}/users/${id}`);
   return res.body;
 };
+
+export const updatePrudency = async id => {
+  const res = await request.patch();
+  return res.body;
+};
