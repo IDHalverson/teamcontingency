@@ -1,2 +1,2 @@
-import PUChart from "./PUCHart";
+import PUChart from "./PUChart";
 export default PUChart;

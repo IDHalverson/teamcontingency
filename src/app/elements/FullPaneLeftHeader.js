@@ -1,14 +1,15 @@
 import React from "react";
-import Card, { CardHeader, CardText } from "material-ui/Card";
+import Card, { CardHeader, CardText, CardMedia } from "material-ui/Card";
 
 const style = {
-  margin: "5%"
+  margin: "2% 5%"
 };
 
-const FullPaneLeftHeader = () => (
+const FullPaneLeftHeader = ({ media, text, title }) => (
   <Card style={style}>
-    <CardHeader title={"Full Pane Left Header"} />
-    <CardText>Thanks for choosing Capital One!</CardText>
+    <CardHeader title={title} />
+    <CardText>{text}</CardText>
+    <CardMedia>{media}</CardMedia>
   </Card>
 );
 
