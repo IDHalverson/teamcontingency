@@ -26,30 +26,43 @@ const aggregateData = (user, month) => {
     return acc;
   }, {});
 
-  let goodDecisionIndex;
-
-  const prudenceHistory = user.transactions.reduce((acc, transaction) => {
+  // gets an array of decision history per month
+  const goodDecisionIndex = user.transactions.reduce((acc, transaction) => {
     if (monthMap[transaction.month] <= month) {
-      acc.push(transaction.rating);
+      if (transaction.rating === undefined) {
+        transaction.rating = [true, false][Math.floor(Math.random() * 2)];
+      }
+      acc[transaction.month] !== undefined
+        ? acc[transaction.month].push(transaction.rating)
+        : (acc[transaction.month] = []);
     }
     return acc;
-  }, []);
+  }, {});
 
-  let index = prudenceHistory.length - 1;
-  while (index) {
-    if (prudenceHistory[index]) {
-      goodDecisionIndex++;
-    } else {
-      goodDecisionIndex = 0;
+  let goodDecisions = {};
+
+  // loops through each month and creates a behavior number based on
+  // consecutive good decisions
+  Object.keys(goodDecisionIndex).map(month => {
+    let index = 0;
+    let behavior = 0;
+    while (index <= month.length) {
+      if (goodDecisionIndex[month][index]) {
+        behavior++;
+      } else {
+        behavior = 0;
+      }
+      index++;
     }
-    index--;
-  }
+    goodDecisions[month] = behavior;
+  });
 
   return Object.keys(spendingByMonth)
     .map(month => ({
       name: month,
       Spending: +spendingByMonth[month].toFixed(2),
-      Limit: limitStart + goodDecisionIndex * 0.2 * (maxLimit - limitStart),
+      // calculates a percentage of remaining limit to increase towards
+      Limit: limitStart + goodDecisions[month] * 0.2 * (maxLimit - limitStart),
       amt: 400
     }))
     .sort((a, b) => monthMap[a.name] - monthMap[b.name]);
