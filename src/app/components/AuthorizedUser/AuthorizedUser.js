@@ -29,9 +29,24 @@ const loaderStyle = {
 };
 
 const AuthorizedUser = ({ user, isPrimary, size: { width } }) => {
-  console.log(user);
+  let primaryData = [];
+  let transactionsByMonth = {};
 
-  const primaryData = [{}];
+  if (user) {
+    user.transactions.forEach(
+      transaction =>
+        transactionsByMonth[transaction.month]
+          ? transactionsByMonth[transaction.month]++
+          : (transactionsByMonth[transaction.month] = 1)
+    );
+
+    primaryData = Object.keys(transactionsByMonth).map(month => ({
+      name: month,
+      Transactions: transactionsByMonth[month],
+      Progress: 10,
+      amt: 400
+    }));
+  }
 
   return (
     <div>
@@ -51,10 +66,48 @@ const AuthorizedUser = ({ user, isPrimary, size: { width } }) => {
         <div>
           <FullPane
             title={"User 1"}
-            text={"Thanks for choosing Capital One!"}
-            media={<AUChart data={data} height={300} width={width * 0.9} />}
+            text={Object.keys(user).map(
+              key =>
+                key === "transactions" ? null : (
+                  <h3 key={key}>{`${key}: ${user[key]}`}</h3>
+                )
+            )}
+            media={
+              <AUChart data={primaryData} height={300} width={width * 0.9} />
+            }
           />
-          <HalfPane
+          {user.account.authorized_users.map(user => {
+            let data = [];
+
+            user.transactions.forEach(
+              transaction =>
+                transactionsByMonth[transaction.month]
+                  ? transactionsByMonth[transaction.month]++
+                  : (transactionsByMonth[transaction.month] = 1)
+            );
+
+            data = Object.keys(transactionsByMonth).map(month => ({
+              name: month,
+              Transactions: transactionsByMonth[month],
+              Progress: 10,
+              amt: 400
+            }));
+
+            return (
+              <HalfPane
+                key={user.credit_card_number}
+                title={"Dependent 1"}
+                text={Object.keys(user).map(
+                  key =>
+                    key === "transactions" ? null : (
+                      <h3 key={key}>{`${key}: ${user[key]}`}</h3>
+                    )
+                )}
+                media={<AUChart data={data} height={300} width={width * 0.4} />}
+              />
+            );
+          })}
+          {/* <HalfPane
             title={"Dependent 1"}
             text={"Thanks for choosing Capital One!"}
             media={<AUChart data={data} height={300} width={width * 0.4} />}
@@ -63,7 +116,7 @@ const AuthorizedUser = ({ user, isPrimary, size: { width } }) => {
             title={"Dependent 2"}
             text={"Thanks for choosing Capital One!"}
             media={<AUChart data={data} height={300} width={width * 0.4} />}
-          />
+          /> */}
         </div>
       )}
     </div>
