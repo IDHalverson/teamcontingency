@@ -35,14 +35,14 @@ const AUChart = ({ width, height, data }) => {
       <Tooltip labelStyle={{ color: CapOneBlue }} />
       <Area
         type="monotone"
-        dataKey="pv"
+        dataKey="Progress"
         stroke={CapOneBlue2}
         fillOpacity={1}
         fill="url(#colorPv)"
       />
       <Area
         type="monotone"
-        dataKey="uv"
+        dataKey="Transactions"
         stroke={CapOneRed}
         fillOpacity={1}
         fill="url(#colorUv)"
