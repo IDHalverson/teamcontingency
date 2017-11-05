@@ -2,9 +2,9 @@ import React from "react";
 import Card, { CardHeader, CardText, CardMedia } from "material-ui/Card";
 
 const style = {
-  margin: "2% 5%",
-  width: "40%",
-  float: "left"
+  marginBottom: "15px",
+  width: "100%",
+  minWidth: "400px"
 };
 
 const titleStyle = {

@@ -37,6 +37,7 @@ const PrimaryUser = ({ month, user, isPrimary, size: { width } }) => {
       </div>
     );
   } else {
+    const halfPaneWidth = width < 800 ? width * 0.9 : width * 0.4;
     return (
       <div>
         <Link to={`/authorized/${user.customer_id}`}>
@@ -53,25 +54,33 @@ const PrimaryUser = ({ month, user, isPrimary, size: { width } }) => {
             }
           />
         </Link>
-        {user.account.authorized_users.map(authUser => (
-          <Link
-            key={authUser.credit_card_number}
-            to={`/${user.customer_id}/${authUser.customer_id}`}
-          >
-            <HalfPane
-              title={`${authUser.first_name} ${authUser.last_name}`}
-              text={<InfoCard user={authUser} />}
-              media={
-                <Chart
-                  user={authUser}
-                  month={month}
-                  height={300}
-                  width={width * 0.4}
-                />
-              }
-            />
-          </Link>
-        ))}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-around"
+          }}
+        >
+          {user.account.authorized_users.map(authUser => (
+            <Link
+              key={authUser.credit_card_number}
+              to={`/${user.customer_id}/${authUser.customer_id}`}
+            >
+              <HalfPane
+                title={`${authUser.first_name} ${authUser.last_name}`}
+                text={<InfoCard user={authUser} />}
+                media={
+                  <Chart
+                    user={authUser}
+                    month={month}
+                    height={300}
+                    width={halfPaneWidth}
+                  />
+                }
+              />
+            </Link>
+          ))}
+        </div>
       </div>
     );
   }
