@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 
 import CapOneLogo from "./elements/CapOneLogo";
 import AuthorizedUser from "./components/AuthorizedUser";
@@ -36,6 +41,9 @@ class App extends Component {
         <div>
           <CapOneLogo next={this.nextMonth} prev={this.prevMonth} />
           <Switch>
+            <Route exact path="/">
+              <Redirect to={`/100710000`} />
+            </Route>
             <Route exact path="/:id">
               <PrimaryUser month={this.state.month} />
             </Route>
